@@ -1,18 +1,21 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins");
 @import url("https://fonts.googleapis.com/css?family=Questrial");
 
-body {
-  margin: 0%;
-  padding: 0%;
-  width: 100vw;
-  background-image: url(hero-bg.jpg);
-  color: var(--text-color);
-  max-width: 100%;
+html, body {
+  margin: 0;
+  padding: 0;
   height: 100%;
+  width: 100%;
   overflow-x: hidden;
-  align-items: center;
-  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-image: url(hero-bg.jpg);
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--text-color);
+  font-family: "Poppins", sans-serif;
 }
 
 #loading {
@@ -45,7 +48,6 @@ body {
   0% {
     transform: rotate(0deg);
   }
-
   100% {
     transform: rotate(360deg);
   }
@@ -155,17 +157,15 @@ body {
   font-family: "Questrial", sans-serif;
 }
 
-
-
 #blog-display {
   padding: 1vh 0px;
   font-family: "Questrial", sans-serif;
 }
 
 #blog p {
-  font-size: 17px;
+  font-size: 20px;
   line-height: 25px;
-  word-spacing: 1.2px;
+  word-spacing: 2px;
   margin: 5vh 0px;
 }
 
@@ -547,6 +547,7 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--text-color);
 }
+
 :root {
   --bg-color: rgb(10, 10, 10);
   --text-color: #fff;
