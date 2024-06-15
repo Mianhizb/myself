@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lets see what JS files are truly for.</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../index.css"></head>
+  <body>
+    <div id="loading">
+      <div id="spinner"></div>
+    </div>
+    <a href="/" class="go_back"><i class="fas fa-arrow-left"></i></a>
+    <div id="background_overlay"></div>
+    <div id="background" style="background: url(top_image.png) center;"></div>
+    <table id="profile_blog">
+      <tbody>
+        <tr>
+          <td style="width:8vw;"><div id="profile_img_blog"></div></td>
+          <td style="width:52vw;">
+            <div id="username_blog"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="blog-display">
+      <h1 id="blog_title">Lets see what JS files are truly for.</h1>
+      <h2 id="blog_sub_title">Today we will explore what JS files can have you achieve as a Bug 
+bounty hunter.</h2>
+      <div id="blog">
+Without further waiting lets dive in, I wont be going into the details of what JS is and how its used. I will be defining ways to use it for Bug bounty only, make sure you are aware of that.</p><img src="img_0.png" alt="blog image 0" id="img_0_original">So JS files are tresure mines for hunters , why you may ask .. its because all functionalities remain dormant in these files waiting to be tapped into .
+Lets look at this JS code for example.
+
+So here is a nice and easy way to understand how JS files can be very crucial, lets imagine 2 customers requests are send concurrently .This allows an attacker to replay an attack with the same request to affect the <i>transfermoney</i> function. 
+ 
+</p><h2> The main question is how to locate these kinds of potential locations and knowing what affects what!! Right? </h2><h4>I highly recommend learning JS as its the back bone for hackers</h4>
+
+<strong>So lets explore more</strong> first of all my methodology heavily relies on discovering how the client side works.
+<h2>Tooling for the job</h2>
+Lets look into how can we get our hands on these files. <a href="https://github.com/003random/getJS">getJS</a> is one tool to look into. Or you can use <a href="https://www.webtoolhub.com/tn561363-javascript-extractor.aspx"> this </a> website for it. 
+
+<h2>Now that we have the files. Lets see what and how to look for vulnerable patterns.</h2>
+<h3>Lets take Dom XSS for example</h3>
+
+<img src="img_1.png" alt="blog image 1" id="img_1_original">These are some of the html sources and sinks that can be exploited for XSS. If you are unaware of what sources and sinks are click on this <a href="https://www.youtube.com/watch?v=ojiOCfg-FXU&amp;pp=ygUWc291cmNlcyBhbmQgc2luayBpbiBqcw%3D%3D">video</a> to find out. 
+
+ We can run some automated tools like this <a href="https://github.com/ariary/DomXssFinder">DomXSS finder</a> and we will get into this laterwards but this is another great tool <a href="https://github.com/BishopFox/jsluice"> Jsluice</a> by <a href="https://github.com/tomnomnom">Tomnomnom</a>. Rather than using regular expressions alone, jsluice uses <strong>go-tree-sitter(a library)</strong> to look for places that URLs are known to be used, such as being assigned to document.location, passed to window.open(), or passed to fetch() etc. 
+</p></p><h2>Similarly</h2><p></p><img src="img_2.png" alt="blog image 2" id="img_2_original"></p><h4>Remember to stand out and actuallly get to the top you need not to rely on tools</h4> 
+Instead you should know what you are doing and be able to enumerate JS files and explain the code to other if you want to succeed keep this in mind.
+
+<h2>List of what can be done with JS files.</h2>
+I will breifly explain the attack vectors that  can  be produced from JS files alone. As explaining each bug class in one article is not efficient
+
+<h3>1. Static Code Analysis</h3>
+What do I mean by that ?!  
+
+<h5>Review for Sensitive Data Exposure:</h5> Look for hardcoded credentials, API keys, tokens, and other sensitive information.
+Here the tool <h3>JSluice</h3> comes into play.
+
+<h5>Identify Insecure Coding Practices:</h5> Search for uses of eval, document.write, innerHTML, and other functions that can lead to XSS vulnerabilities.
+<h5>Analyze for Logic Flaws:</h5> Inspect the code for business logic flaws that can be exploited.
+
+<h5>Check for Deprecated/Unsafe Functions: </h5>Identify the use of deprecated JavaScript functions or unsafe coding practices.
+
+<h5>Look for Unused Code: </h5>Detect unused or dead code that could potentially be removed or that might hide vulnerabilities.<h2>This for example</h2>This api key was found using the extension <a href="https://addons.mozilla.org/en-US/firefox/addon/trufflehog/"> Trufflehog</a> its a good tool. <img src="img_3.png" alt="blog image 3" id="img_3_original">Lets dive into this image as it has alot of depth into it. This api key seems to be used to extrat some data how are we going to use it?.
+Simple by using curl we can forge a request with the headers and specfic api endpoint extracting user data.<h3>2.Dependency Analysis</h3>
+
+<h5>Identify and Analyze Dependencies:</h5> Determine the libraries and frameworks being used and check them for known vulnerabilities.
+
+<h5>Verify Dependency Versions:</h5> Ensure that all dependencies are up-to-date and free from known security issues using tools like npm audit or yarn audit.<h3>3.Code Execution Flow Analysis</h3>
+
+<h5>Identify Critical Functions:</h5> Map out critical functions and their execution flow to understand potential attack vectors.
+
+<h5>Review Event Listeners and Handlers:</h5> Examine event listeners and handlers for potential issues like race conditions or improper validation.<h3>4.Reverse Engineering and Obfuscation Analysis</h3>
+<h5>Deobfuscate Code:</h5> If the JavaScript is obfuscated, deobfuscate it to understand its functionality better.
+
+<strong>This is one hefty of a task,lets see how we can deobfuscate the code.</strong> <a href="http://www.jsnice.org/"> JSnice</a> is a great tool to rename variables assigned different characters to increase maximum time spent by a malicious threat actor.
+
+<strong>This is like how locks are used to restrict access, when asked from a lockpicker he said locks are not for protection they simply decrease the efficiency of the process and create diversions in actions. Whilst alot of hacker despise the idea of obfuscatoin, simply because they create a env of trust and has a negative impact on how a company deals with front end code relying on obfuscation. </strong> 
+
+I would recommend watching these vids ----&gt;    <a href="https://www.youtube.com/watch?v=_UIqhaYyCMI">(--)</a> , <a href="https://www.youtube.com/watch?v=XDAiS6KBDOs">(-_-)</a>  this one too, <a href="https://www.youtube.com/watch?v=FTeE3OrTNoA"> :) </a> if you want to further understand how and what do i mean.
+<h5>Analyze for Malicious Code:</h5> Look for signs of malware, adware, or other malicious activities embedded within the JavaScript.
+
+<h3>5.Manual Code Review</h3><img src="img_4.png" alt="blog image 4" id="img_4_original"><strong>This is where the fun of hacking lies.</strong> You need to be well enough acquineted with JS to be able to read through the code analyse whats happening, as i mentioned earlier you need to be well versed with JS if you wanna get stronger, learning languages like python, bash , js , and frameworks, other technologies like react vue node, is very crucial and necessary.
+
+Code analysis is one of the last resorts hackers take into account while researching , thats definitly not the best approach. You can enumerate the code, read through how they have assigned variables declared functions and then target those front end features. This way you know what you are up against and you are prepared to deep dive. <h5>Deep dive certainly is one of the upcoming future blog posts how to deep dive more on that later.</h5> Developing the hacker intuition and creating your methodology is part of the journey.
+
+<a href="https://www.youtube.com/watch?v=FTeE3OrTNoA"> :) </a> Here tomnomnom beautify describes how to use the dev tools to enumerate JS.<h3>Lastly Monitor and Log Analysis</h3>
+Monitoring and keeping sight of the JS code is also very important , finding assets before other hunters do.
+Notify by project discovery can be used to integrate with other tools to create a notifying discord/slack server to send info about a runnig tool.
+
+<h3>NOTE:</h3> This requires setting up a cloud instance for the tool to keep running. Check out this <a href="https://www.youtube.com/watch?v=wP3n1JnqtMU&amp;pp=ygUTbmFoYW1zZWMgbW9uaXRvcmluZw%3D%3D">video</a> by Nahamsec if you want to take a look at how to setup. 
+
+Lemme explain how you can set it up, <strong>you might be thinking why dont you just share the script already</strong> thats because you need to do it yourself. I will explain though how to setup.
+
+
+<h3>Steps</h3>
+So what you can do is setup a cloud instance with linode or gcp , or digiatalocean whatevey you like, then integrate getJS with 
+<a href="https://github.com/tomnomnom/anew">anew</a> to remove duplicates , then output to file, check the lenght of the file, if fhe file length is greater then the previos file send a notificaton through notify, like follow  "JS code has been altered " etc.
+
+<h3>Some last minute tips if you read this far,   : ) </h3>
+<ol>
+  <li>No one is perfect we all learn stuff new everyday.s</li>
+  <li>Dont compare your self with others , you are competing with your past.</li>
+  <li>Use burp more than the terminal. hehehe. Hopefully you enjoyed the read.</li>
+</ol>
+ 
+<p>Lemme know if any improvements is needed or you want to collaborate. 
+Cheers.
+Happy Hacking.</p>.
+</div>
+    </div><script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=d92f31b1b721e1ef110e67152a7ee93d8572c5ef'></script>
+    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1192869/t/11"></script>
+  
+    <script type="text/javascript">
+      setTimeout(function() {
+        document.getElementById("loading").classList.add("animated");
+        document.getElementById("loading").classList.add("fadeOut");
+        setTimeout(function() {
+          document.getElementById("loading").classList.remove("animated");
+          document.getElementById("loading").classList.remove("fadeOut");
+          document.getElementById("loading").style.display = "none";
+        }, 800);
+      }, 1500);
+      $.getJSON("../../config.json", function(user) {
+        var icon = document.createElement("link");
+        icon.setAttribute("rel", "icon");
+        icon.setAttribute("href", user[0].userimg);
+        icon.setAttribute("type", "image/png");
+        document.getElementsByTagName("head")[0].appendChild(icon);
+        document.getElementById(
+          "profile_img_blog"
+        ).style.background = `url('${user[0].userimg}') center center`;
+        document.getElementById(
+          "username_blog"
+        ).innerHTML = `<span style="display:${
+          user[0].name == null || !user[0].name ? "none" : "block"
+        };">${user[0].name}</span>@${user[0].username}<b id="blog_time"></b>`;
+
+        if ((user[0].theme = "dark.css")) {
+          document.querySelector("#background_overlay").style.background =
+            "linear-gradient(0deg, rgba(10, 10, 10, 1), rgba(10, 10, 10, 0.1))";
+        } else {
+          document.querySelector("#background_overlay").style.background =
+            "linear-gradient(0deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.1))";
+        }
+      });
+    </script>
+  
+
+</body></html>
